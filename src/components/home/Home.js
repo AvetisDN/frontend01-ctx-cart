@@ -1,14 +1,10 @@
-import { withStyles } from '@material-ui/core'
+import { Grid, withStyles } from '@material-ui/core'
 import React from 'react'
 import StoreContext from '../../context/StoreContext'
 import CategoryCart from './CategoryCart'
 
 const styles = (theme) => ({
-    main: {
-        display: 'flex',
-        flexWrap: 'wrap',
-        marginTop: theme.spacing(3)
-    }
+    
 })
 
 function Home(props) {
@@ -16,13 +12,15 @@ function Home(props) {
     return (
         <StoreContext.Consumer>
             {(ctx) => (
-                <div className={classes.main}>
+                <Grid container spacing={3}>
                     {
                         ctx.getCategories().map(category => (
-                            <CategoryCart category={category}/>
+                            <Grid item xs={12} sm={6} md={4} lg={3} key={category.id}>
+                                <CategoryCart category={category}/>
+                            </Grid>
                         ))
                     }
-                </div>
+                </Grid>
             )}
         </StoreContext.Consumer>
     )
