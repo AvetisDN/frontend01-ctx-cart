@@ -33,7 +33,60 @@ export default class StoreProvider extends Component {
                 image: 'https://images.unsplash.com/photo-1593152167544-085d3b9c4938?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80'
             }
         ],
-        products: [],
+        products: [
+            {
+                id: 1,
+                category_id: 1,
+                name: 'Laptop 1',
+                slug: 'laptop-1',
+                image: 'https://images.unsplash.com/photo-1516387938699-a93567ec168e',
+                gallery: [
+                    'https://images.unsplash.com/photo-1516387938699-a93567ec168e',
+                    'https://images.unsplash.com/photo-1541807084-5c52b6b3adef',
+                    'https://images.unsplash.com/photo-1577375729152-4c8b5fcda381',
+                    'https://images.unsplash.com/photo-1587614380862-0294308ae58b'
+                ],
+                price: 1000,
+                description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam ducimus eum veniam explicabo itaque laudantium, reiciendis officiis maxime fugit sunt, quibusdam ab est aliquid dicta quisquam cumque autem ad reprehenderit.'
+            },
+            {
+                id: 2,
+                category_id: 1,
+                name: 'Laptop 2',
+                slug: 'laptop-2',
+                image: 'https://images.unsplash.com/photo-1541807084-5c52b6b3adef',
+                price: 1200,
+                description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam ducimus eum veniam explicabo itaque laudantium, reiciendis officiis maxime fugit sunt, quibusdam ab est aliquid dicta quisquam cumque autem ad reprehenderit.'
+            },
+            {
+                id: 3,
+                category_id: 1,
+                name: 'Laptop 3',
+                slug: 'laptop-3',
+                image: 'https://images.unsplash.com/photo-1587614380862-0294308ae58b',
+                old_price: 1000,
+                price: 900,
+                description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam ducimus eum veniam explicabo itaque laudantium, reiciendis officiis maxime fugit sunt, quibusdam ab est aliquid dicta quisquam cumque autem ad reprehenderit.'
+            },
+            {
+                id: 4,
+                category_id: 1,
+                name: 'Laptop 4',
+                slug: 'laptop-4',
+                image: 'https://images.unsplash.com/photo-1577375729152-4c8b5fcda381',
+                price: 750,
+                description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam ducimus eum veniam explicabo itaque laudantium, reiciendis officiis maxime fugit sunt, quibusdam ab est aliquid dicta quisquam cumque autem ad reprehenderit.'
+            },
+            {
+                id: 5,
+                category_id: 2,
+                name: 'Tablet 1',
+                slug: 'tablet-1',
+                image: 'https://images.unsplash.com/photo-1565221287653-9a2713dbe4ef',
+                price: 500,
+                description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam ducimus eum veniam explicabo itaque laudantium, reiciendis officiis maxime fugit sunt, quibusdam ab est aliquid dicta quisquam cumque autem ad reprehenderit.'
+            },
+        ],
         cart: ''
     }
     render() {
@@ -44,10 +97,13 @@ export default class StoreProvider extends Component {
                     products: this.state.products,
                     cart: this.state.cart,
                     getCategories: () => this.state.categories,
-                    getCategory: (slug) => this.state.categories.filter((category) => category.slug===slug)
+                    getCategory: (slug) => this.state.categories.filter((category) => category.slug===slug),
+                    getProductsByCategory: (category_id) => this.state.products.filter((product) => product.category_id===category_id),
+                    getProduct: (slug) => this.state.products.filter((product) => product.slug===slug),
                 }}
             >
                 {this.props.children}
+                
             </StoreContext.Provider>
         )
     }
