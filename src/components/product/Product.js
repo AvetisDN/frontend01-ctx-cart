@@ -1,9 +1,10 @@
 import React from 'react'
-import {Grid, withStyles, Paper } from '@material-ui/core'
+import {Grid, withStyles, Paper, Breadcrumbs, Link, Box } from '@material-ui/core'
 import StoreContext from '../../context/StoreContext'
 import ProductGallery from './ProductGallery'
 import ProductInfo from './ProductInfo'
 import ProductDetails from './ProductDetails'
+import { Link as RouterLink } from 'react-router-dom'
 
 const styles = (theme) => ({
     root: {
@@ -33,17 +34,30 @@ function Product(props) {
         <StoreContext.Consumer>
             {(ctx) => (
                 <Grid container spacing={3}>
+                    <Grid item xs={12}>
+                        <Breadcrumbs>
+                            <Link component={RouterLink} to='/'>
+                                Home
+                            </Link>
+                            <Link component={RouterLink} to={`/category/${ctx.getProduct(props.match.params.slug).category[0].slug}`}>
+                                {ctx.getProduct(props.match.params.slug).category[0].name}
+                            </Link>
+                            <Box>
+                                {ctx.getProduct(props.match.params.slug).product[0].name}
+                            </Box>
+                        </Breadcrumbs>
+                    </Grid>
                     {
-                        ctx.getProduct(props.match.params.slug).map(product => (
+                        ctx.getProduct(props.match.params.slug).product.map(product => (
                             <Grid item xs={12} key={product.id}>
                                 <Paper className={classes.paper}>
                                     <Grid container spacing={3}>
-                                        <Grid item xs={12} md={8}>
+                                        <Grid item xs={12} md={7}>
                                             <ProductGallery 
                                                 image={product.image} 
                                                 gallery={product.gallery ? product.gallery : null} />
                                         </Grid>
-                                        <Grid item xs={12} md={4}>
+                                        <Grid item xs={12} md={5}>
                                             <ProductInfo 
                                                 name={product.name} 
                                                 price={product.price} 

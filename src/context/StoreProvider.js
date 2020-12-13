@@ -99,7 +99,14 @@ export default class StoreProvider extends Component {
                     getCategories: () => this.state.categories,
                     getCategory: (slug) => this.state.categories.filter((category) => category.slug===slug),
                     getProductsByCategory: (category_id) => this.state.products.filter((product) => product.category_id===category_id),
-                    getProduct: (slug) => this.state.products.filter((product) => product.slug===slug),
+                    getProduct: (slug) => {
+                        const product = this.state.products.filter((product) => product.slug===slug)
+                        const productObj = {
+                            product: product,
+                            category: this.state.categories.filter((category) => category.id===product[0].category_id)
+                        }
+                        return productObj
+                    },
                 }}
             >
                 {this.props.children}

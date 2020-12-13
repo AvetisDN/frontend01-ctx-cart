@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import {createMuiTheme, ThemeProvider} from '@material-ui/core/styles'
-import { red, teal, blueGrey } from '@material-ui/core/colors'
+import { red, teal, blueGrey, grey } from '@material-ui/core/colors'
 import { AppBar, Button, Container, CssBaseline, Switch as Toggler, Toolbar, Typography, withStyles} from '@material-ui/core'
 import { BrowserRouter, Switch, Route, Link } from 'react-router-dom'
 import CategoryGrid from './components/category/CategoryGrid'
