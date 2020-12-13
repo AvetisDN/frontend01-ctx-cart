@@ -11,7 +11,8 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import {
     Link
 } from 'react-router-dom'
-import React from 'react'
+import React, {useContext, useState} from 'react'
+import StoreContext from '../../context/StoreContext'
 
 const styles = (theme) => ({
     media: {
@@ -37,6 +38,11 @@ const styles = (theme) => ({
 
 function ProductCard(props) {
     const {classes, product} = props
+
+    const context = useContext(StoreContext)
+
+    const [inCart, setInCart] = useState(context.isProductInCart(product.id))
+
     return (
         <Card>
             <CardMedia
@@ -69,7 +75,11 @@ function ProductCard(props) {
                 <Button
                     variant="contained"
                     color="secondary"
-                    // disabled
+                    disabled = { inCart }
+                    onClick = {() => {
+                        context.addProductToCart(product.id)
+                        setInCart(true)
+                    }}
                 >
                     <ShoppingCartIcon/>
                 </Button>

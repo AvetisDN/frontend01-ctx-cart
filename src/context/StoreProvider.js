@@ -107,6 +107,43 @@ export default class StoreProvider extends Component {
                         }
                         return productObj
                     },
+                    addProductToCart: (id) => {
+                        let currentCart = []
+                        if(localStorage.getItem('cart-app-cart') && localStorage.getItem('cart-app-cart') !== 'undefined') {
+                            currentCart = JSON.parse(localStorage.getItem('cart-app-cart'))
+                        }
+                        if(!currentCart.filter(item => item.productId === id).length) {
+                            currentCart.push({
+                                productId: id,
+                                quantity: 1
+                            })
+                        }
+                        localStorage.setItem('cart-app-cart', JSON.stringify(currentCart))
+                    },
+                    isProductInCart: (id) => {
+                        let currentCart = []
+                        if(localStorage.getItem('cart-app-cart') && localStorage.getItem('cart-app-cart') !== 'undefined') {
+                            currentCart = JSON.parse(localStorage.getItem('cart-app-cart'))
+                        }
+                        if(currentCart.filter(item => item.productId === id).length) return true
+                        return false
+                    },
+                    getProductsQuantity: () => {
+                        let quantity = 0
+                        let currentCart = []
+                        if(localStorage.getItem('cart-app-cart') && localStorage.getItem('cart-app-cart') !== 'undefined') {
+                            currentCart = JSON.parse(localStorage.getItem('cart-app-cart'))
+                        }
+                        currentCart.map(item => {
+                            quantity += +item.quantity
+                        })
+                        return quantity
+                    },
+                    getTotalPrice: () => {},
+                    removeProductFromCart: (id) => {},
+                    increaseProductQuantity: (id) => {},
+                    decreaseProductQuantity: (id) => {},
+                    
                 }}
             >
                 {this.props.children}

@@ -59,6 +59,7 @@ function Product(props) {
                                         </Grid>
                                         <Grid item xs={12} md={5}>
                                             <ProductInfo 
+                                                id={product.id} 
                                                 name={product.name} 
                                                 price={product.price} 
                                                 old_price={product.old_price ? product.old_price : null}  />
