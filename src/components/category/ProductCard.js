@@ -77,7 +77,7 @@ function ProductCard(props) {
                     color="secondary"
                     disabled = { inCart }
                     onClick = {() => {
-                        context.addProductToCart(product.id)
+                        context.addProductToCart(product.id, product.name, product.price)
                         setInCart(true)
                     }}
                 >

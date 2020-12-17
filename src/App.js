@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import {createMuiTheme, ThemeProvider} from '@material-ui/core/styles'
-import { red, teal, blueGrey, grey } from '@material-ui/core/colors'
+import { red, teal, blueGrey, grey, deepPurple, amber } from '@material-ui/core/colors'
 import { AppBar, Button, Container, CssBaseline, Switch as Toggler, Toolbar, Typography, withStyles} from '@material-ui/core'
 import { BrowserRouter, Switch, Route, Link } from 'react-router-dom'
 import CategoryGrid from './components/category/CategoryGrid'
@@ -8,6 +8,7 @@ import Product from './components/product/Product'
 import Home from './components/home/Home'
 import StoreProvider from './context/StoreProvider'
 import { Brightness4, Brightness7 } from '@material-ui/icons'
+import CartHeader from './components/misc/CartHeader'
 
 const ThemeSwitcher = withStyles({
   switchBase: {
@@ -51,7 +52,7 @@ function App(props) {
     palette: {
       type: themeType,
       primary: {
-        main: themeType === 'light' ? teal[500] : teal[700]
+        main: themeType === 'light' ? blueGrey[500] : blueGrey[700]
       },
       secondary: {
         main: red[400]
@@ -82,6 +83,7 @@ function App(props) {
               </Typography>
               <div style={{flexGrow:1}}></div>
               <div>
+                <CartHeader/>
                 <ThemeSwitcher onClick={handleToggler} checked={themeType === 'dark'} />
                 {themeType === 'dark' && 
                   <Button onClick={handleToggler2} className={classes.btnLight}>

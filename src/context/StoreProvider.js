@@ -107,7 +107,11 @@ export default class StoreProvider extends Component {
                         }
                         return productObj
                     },
-                    addProductToCart: (id) => {
+                    getProductById: (id) => {
+                        const product = this.state.products.filter((product) => product.id===id)
+                        return product
+                    },
+                    addProductToCart: (id, name, price) => {
                         let currentCart = []
                         if(localStorage.getItem('cart-app-cart') && localStorage.getItem('cart-app-cart') !== 'undefined') {
                             currentCart = JSON.parse(localStorage.getItem('cart-app-cart'))
@@ -115,6 +119,8 @@ export default class StoreProvider extends Component {
                         if(!currentCart.filter(item => item.productId === id).length) {
                             currentCart.push({
                                 productId: id,
+                                price: price,
+                                name: name,
                                 quantity: 1
                             })
                         }
@@ -139,7 +145,17 @@ export default class StoreProvider extends Component {
                         })
                         return quantity
                     },
-                    getTotalPrice: () => {},
+                    getTotalPrice: () => {
+                        let summ = 0
+                        let currentCart = []
+                        if(localStorage.getItem('cart-app-cart') && localStorage.getItem('cart-app-cart') !== 'undefined') {
+                            currentCart = JSON.parse(localStorage.getItem('cart-app-cart'))
+                        }
+                        currentCart.map(item => {
+                            summ += item.quantity * item.price
+                        })
+                        return summ
+                    },
                     removeProductFromCart: (id) => {},
                     increaseProductQuantity: (id) => {},
                     decreaseProductQuantity: (id) => {},

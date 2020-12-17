@@ -55,7 +55,7 @@ function ProductInfo(props) {
                             variant="contained"
                             color="secondary"
                             disabled = { inCart }
-                            onClick = {() => { ctx.addProductToCart(id); setInCart(true) }}
+                            onClick = {() => { ctx.addProductToCart(id, name, price); setInCart(true) }}
                         >
                             <ShoppingCartIcon/>
                             Add to cart

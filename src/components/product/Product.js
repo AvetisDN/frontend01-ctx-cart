@@ -3,7 +3,7 @@ import {Grid, withStyles, Paper, Breadcrumbs, Link, Box } from '@material-ui/cor
 import StoreContext from '../../context/StoreContext'
 import ProductGallery from './ProductGallery'
 import ProductInfo from './ProductInfo'
-import ProductDetails from './ProductDetails'
+// import ProductDetails from './ProductDetails'
 import { Link as RouterLink } from 'react-router-dom'
 
 const styles = (theme) => ({
@@ -65,8 +65,8 @@ function Product(props) {
                                                 old_price={product.old_price ? product.old_price : null}  />
                                         </Grid>
                                         <Grid item xs={12}>
-                                            <ProductDetails 
-                                                description={product.description} />
+                                            {/* <ProductDetails 
+                                                description={product.description} /> */}
                                         </Grid>
                                     </Grid>
                                 </Paper>
