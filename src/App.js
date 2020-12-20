@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import {createMuiTheme, ThemeProvider} from '@material-ui/core/styles'
-import { red, teal, blueGrey, grey, deepPurple, amber } from '@material-ui/core/colors'
+import { red, blueGrey } from '@material-ui/core/colors'
 import { AppBar, Button, Container, CssBaseline, Switch as Toggler, Toolbar, Typography, withStyles} from '@material-ui/core'
 import { BrowserRouter, Switch, Route, Link } from 'react-router-dom'
 import CategoryGrid from './components/category/CategoryGrid'
@@ -9,6 +9,7 @@ import Home from './components/home/Home'
 import StoreProvider from './context/StoreProvider'
 import { Brightness4, Brightness7 } from '@material-ui/icons'
 import CartHeader from './components/misc/CartHeader'
+import Cart from './components/cart/Cart'
 
 const ThemeSwitcher = withStyles({
   switchBase: {
@@ -103,6 +104,7 @@ function App(props) {
                 <Route exact path='/' component={Home}/>
                 <Route exact path='/category/:slug' component={CategoryGrid}/>
                 <Route exact path='/product/:slug' component={Product}/>
+                <Route exact path='/cart' component={Cart}/>
               </Switch>
           </Container>
         </BrowserRouter>

@@ -17,7 +17,6 @@ class CartHeader extends Component {
         this.handleClose = this.handleClose.bind(this)
         this.handleCloseAndLink = this.handleCloseAndLink.bind(this)
         this.handleClick = this.handleClick.bind(this)
-        this.updateTotal = this.updateTotal.bind(this)
     }
 
     handleClick(e) {
@@ -41,25 +40,13 @@ class CartHeader extends Component {
         this.props.history.push('/cart')
     }
 
-    updateTotal() {
-        this.setState({
-            total: this.context.getProductsQuantity(),
-            totalSumm: this.context.getTotalPrice()
-        });
-        setTimeout(this.updateTotal, 1000)
-    }
-
     static contextType = StoreContext; 
     
-    componentDidMount() {
-        this.updateTotal()
-    }
-
     render() {
         return (
             <React.Fragment>
                 <IconButton aria-controls="cart-menu" aria-haspopup="true" onClick={this.handleClick}>
-                    <Badge badgeContent={this.state.total} color='secondary'>
+                    <Badge badgeContent={this.context.getProductsQuantity()} color='secondary'>
                         <ShoppingCart/>
                     </Badge>
                 </IconButton>
@@ -71,7 +58,7 @@ class CartHeader extends Component {
                     onClose={this.handleClose}
                 >
                     <MenuItem onClose={this.handleClose}>
-                        Total summ: ${this.state.totalSumm}
+                        Total summ: ${this.context.getTotalPrice()}
                     </MenuItem>
                     <MenuItem>
                         <Button variant='contained'

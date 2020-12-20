@@ -23,11 +23,11 @@ const styles = (theme) => ({
 
 function ProductInfo(props) {
 
-    const {classes, name, price, old_price, id} = props
+    const {classes, product} = props
 
     const context = useContext(StoreContext)
 
-    const [inCart, setInCart] = useState(context.isProductInCart(id))
+    const [inCart, setInCart] = useState(context.isProductInCart(product.id))
 
     return (
         <StoreContext.Consumer>
@@ -35,17 +35,17 @@ function ProductInfo(props) {
                 <Grid container spacing={3}>
                     <Grid item xs={12}>
                         <Typography gutterBottom variant="h5" component="h2">
-                            {name}
+                            {product.name}
                         </Typography>
                         
                         
                     </Grid>
                     <Grid item xs={12}>
                         <Typography variant="h5" className={classes.price} component="p">
-                            ${price}
-                            {old_price &&
+                            ${product.price}
+                            {product.old_price &&
                                 <Typography variant="h6" className={classes.oldPrice} component="span">
-                                    ${old_price}
+                                    ${product.old_price}
                                 </Typography>
                             }
                         </Typography>
@@ -55,7 +55,7 @@ function ProductInfo(props) {
                             variant="contained"
                             color="secondary"
                             disabled = { inCart }
-                            onClick = {() => { ctx.addProductToCart(id, name, price); setInCart(true) }}
+                            onClick = {() => { ctx.addProductToCart(product); setInCart(true) }}
                         >
                             <ShoppingCartIcon/>
                             Add to cart

@@ -89,6 +89,13 @@ export default class StoreProvider extends Component {
         ],
         cart: ''
     }
+    componentDidMount() {
+        if(localStorage.getItem('cart-app-cart') && localStorage.getItem('cart-app-cart') !== 'undefined') {
+            this.setState({
+                cart: JSON.parse(localStorage.getItem('cart-app-cart'))
+            })
+        }
+    }
     render() {
         return (
             <StoreContext.Provider
@@ -111,54 +118,82 @@ export default class StoreProvider extends Component {
                         const product = this.state.products.filter((product) => product.id===id)
                         return product
                     },
-                    addProductToCart: (id, name, price) => {
+                    addProductToCart: (product) => {
                         let currentCart = []
                         if(localStorage.getItem('cart-app-cart') && localStorage.getItem('cart-app-cart') !== 'undefined') {
                             currentCart = JSON.parse(localStorage.getItem('cart-app-cart'))
                         }
-                        if(!currentCart.filter(item => item.productId === id).length) {
+                        if(!currentCart.filter(item => item.productId === product.id).length) {
                             currentCart.push({
-                                productId: id,
-                                price: price,
-                                name: name,
+                                product: product,
                                 quantity: 1
                             })
                         }
+                        this.setState({
+                            cart: currentCart
+                        })
                         localStorage.setItem('cart-app-cart', JSON.stringify(currentCart))
                     },
                     isProductInCart: (id) => {
-                        let currentCart = []
-                        if(localStorage.getItem('cart-app-cart') && localStorage.getItem('cart-app-cart') !== 'undefined') {
-                            currentCart = JSON.parse(localStorage.getItem('cart-app-cart'))
+                        if(this.state.cart.length) {
+                            if(this.state.cart.filter(item => item.product.id === id).length) return true
                         }
-                        if(currentCart.filter(item => item.productId === id).length) return true
                         return false
                     },
                     getProductsQuantity: () => {
                         let quantity = 0
-                        let currentCart = []
-                        if(localStorage.getItem('cart-app-cart') && localStorage.getItem('cart-app-cart') !== 'undefined') {
-                            currentCart = JSON.parse(localStorage.getItem('cart-app-cart'))
+                        if(this.state.cart.length) {
+                            this.state.cart.map(item => {
+                                quantity += +item.quantity
+                            })
                         }
-                        currentCart.map(item => {
-                            quantity += +item.quantity
-                        })
                         return quantity
                     },
                     getTotalPrice: () => {
                         let summ = 0
-                        let currentCart = []
-                        if(localStorage.getItem('cart-app-cart') && localStorage.getItem('cart-app-cart') !== 'undefined') {
-                            currentCart = JSON.parse(localStorage.getItem('cart-app-cart'))
+                        if(this.state.cart.length) {
+                            this.state.cart.map(item => {
+                                summ += item.quantity * item.product.price
+                            })
                         }
-                        currentCart.map(item => {
-                            summ += item.quantity * item.price
-                        })
                         return summ
                     },
-                    removeProductFromCart: (id) => {},
-                    increaseProductQuantity: (id) => {},
-                    decreaseProductQuantity: (id) => {},
+                    removeProductFromCart: (id) => {
+                        let newCart = []
+                        if(this.state.cart.length) {
+                            newCart = this.state.cart.filter(item => item.product.id !== id)
+                        }
+                        this.setState({
+                            cart: newCart
+                        })
+                        localStorage.setItem('cart-app-cart', JSON.stringify(newCart))
+                    },
+                    increaseProductQuantity: (id) => {
+                        let newCart = []
+                        if(this.state.cart.length) {
+                            newCart = this.state.cart
+                            newCart.map((item, index) => {
+                                if(item.product.id === id) item.quantity++
+                            })
+                        }
+                        this.setState({
+                            cart: newCart
+                        })
+                        localStorage.setItem('cart-app-cart', JSON.stringify(newCart))
+                    },
+                    decreaseProductQuantity: (id) => {
+                        let newCart = []
+                        if(this.state.cart.length) {
+                            newCart = this.state.cart
+                            newCart.map((item, index) => {
+                                if(item.product.id === id) item.quantity--
+                            })
+                        }
+                        this.setState({
+                            cart: newCart
+                        })
+                        localStorage.setItem('cart-app-cart', JSON.stringify(newCart))
+                    },
                     
                 }}
             >
